@@ -5,7 +5,7 @@ import {useCartStore} from '@/store/useCartStore'
 import Image from 'next/image'
 
 const Cart = () => {
-  const {  products,  removeFromCart} = useCartStore();
+  const {  products,  removeFromCart, totalPrice} = useCartStore();
   
 useEffect(() => {
     useCartStore.persist.rehydrate();
@@ -20,7 +20,7 @@ useEffect(() => {
         { products.map((item: any) => (
           <div
             key={item.dataId}
-            className='grid grid-cols-5 place-items-center  '
+            className='grid grid-cols-6 place-items-center  '
           >
             <Image
               src={item.image}
@@ -36,6 +36,7 @@ useEffect(() => {
             <p className='text-xl max-sm:text-sm w-[150px] max-lg:w-[80px] text-right '>
               {(+item.price).toFixed(2)} $
             </p>
+            <p className='text-xl max-sm:text-sm'>{(item.quantity*item.price).toFixed(2)} $</p>
             <button
                onClick={() =>  removeFromCart(item)}
               className='text-3xl text-red-700'
@@ -46,7 +47,7 @@ useEffect(() => {
           </div>
         ))}
       </div>
-      
+      <p className='text-right text-xl font-bold'>Total Price {(+totalPrice).toFixed(2)} $</p>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 'use client'
-import useCartStore from '@/store/useCartStore'
+import {useCartStore} from '@/store/useCartStore'
 import React, { useState } from 'react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
@@ -11,8 +11,8 @@ import DropdownMenu from '@/components/DropdownMenu'
 
 const Navbar = () => {
   
-  const { cartItems } = useCartStore();
-  const cartCount = cartItems.length ||0
+  const { totalItems } = useCartStore();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -87,7 +87,7 @@ const Navbar = () => {
                     height={40}
                     className='bg-white rounded-sm mr-2'
                   />
-                  <sup className='text-xl'>{cartCount}</sup>
+                  <sup className='text-xl'>{totalItems}</sup>
                 </>
               ) : (
                 <>
@@ -97,7 +97,7 @@ const Navbar = () => {
                     width={40}
                     height={40}
                   />
-                  <sup className='text-xl'>{cartCount}</sup>
+                  <sup className='text-xl'>{totalItems}</sup>
                 </>
               )}
             </Link>
@@ -175,7 +175,7 @@ const Navbar = () => {
                     className='text-primary rounded-sm mr-2'
                   />
                   <sup className='text-xl text-primary-foreground'>
-                    {cart.length}
+                    {totalItems}
                   </sup>
                 </>
               ) : (
@@ -188,7 +188,7 @@ const Navbar = () => {
                     className='bg-primary-foreground rounded-sm mr-2'
                   />
                   <sup className='text-xl text-primary-foreground '>
-                    {cart.length}
+                    {totalItems}
                   </sup>
                 </>
               )}

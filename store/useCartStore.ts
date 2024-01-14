@@ -1,68 +1,86 @@
+import { ActionTypes, CartType } from '/useCartStore'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
-interface Product {
-  dataId: string
-  image: string
+export type ProductType = {
+  _id: string
   name: string
+  description?: string
+  image?: string
   price: number
 }
 
-export type CartProduct = Product & {
+export type CartItemType = {
+  id: string
+  name: string
+  image?: string
+  price: number
   quantity: number
 }
 
-interface CartState {
-  cartItems: CartProduct[]
-  addItemToCart: (item: Product) => void
-  increaseQuantity: (productId: string) => void;
-  decreaseQuantity: (productId: string) => void;
+export type CartType = {
+  products: CartItemType[]
+  totalItems: number
+  totalPrice: number
 }
 
-const useCartStore = create<CartState>((set, get) => ({
-  cartItems: [],
-  addItemToCart: (item: Product) => {
-    const itemExists = get().cartItems.find(
-      (cartItem) => cartItem.dataId === item.dataId)
-      if (itemExists) {
-        if (typeof itemExists.quantity === "number") {
-          itemExists.quantity++;
-        }
-        set({ cartItems: [...get().cartItems] });
-      } else {
-        set({ cartItems: [...get().cartItems, { ...item, quantity: 1 }] });
-      }
-  },
-  increaseQuantity: (productId) => {
-    const itemExists = get().cartItems.find(
-      (cartItem) => cartItem.dataId === productId
-    );
-    if (itemExists) {
-      if (typeof itemExists.quantity === "number") {
-        itemExists.quantity++;
-      }
+export type ActionTypes = {
+  addToCart: (item: CartItemType) => void
+  removeFromCart: (item: CartItemType) => void
+}
 
-      set({ cartItems: [...get().cartItems] });
-    }
-  },
-  decreaseQuantity: (productId) => {
-    const itemExists = get().cartItems.find(
-      (cartItem) => cartItem.dataId === productId
-    );
+const INITIAL_STATE = {
+  products: [],
+  totalItems: 0,
+  totalPrice: 0,
+}
 
-    if (itemExists) {
-      if (typeof itemExists.quantity === "number") {
-        if (itemExists.quantity === 1) {
-          const updatedCartItems = get().cartItems.filter(
-            (item) => item.dataId !== productId
-          );
-          set({ cartItems: updatedCartItems });
+export const useCartStore = create(
+  persist<CartType & ActionTypes>(
+    (set, get) => ({
+      products: INITIAL_STATE.products,
+      totalItems: INITIAL_STATE.totalItems,
+      totalPrice: INITIAL_STATE.totalPrice,
+
+      addToCart(item: CartType) {
+        const products = get().products
+        const productInState = products.find(
+          (product: { id: string }) => product.id === item.id
+        )
+
+        if (productInState) {
+          const updatedProducts = products.map((product: CartItemType) =>
+            product.id === productInState.id
+              ? {
+                  ...item,
+                  quantity: item.quantity + product.quantity,
+                  price: item.price + product.price,
+                }
+              : item
+          )
+          set((state: CartType) => ({
+            products: updatedProducts,
+            totalItems: state.totalItems + item.quantity,
+            totalPrice: state.totalPrice + item.price,
+          }))
         } else {
-          itemExists.quantity--;
-          set({ cartItems: [...get().cartItems] });
+          set((state: CartType) => ({
+            products: [...state.products, item],
+            totalItems: state.totalItems + item.quantity,
+            totalPrice: state.totalPrice + item.price,
+          }))
         }
-      }
-    }
-  },
-}))
-
-export default useCartStore
+      },
+      removeFromCart(item: CartType) {
+        set((state: CartType) => ({
+          products: state.products.filter(
+            (product: CartItemType) => product.id !== item.id
+          ),
+          totalItems: state.totalItems - item.quantity,
+          totalPrice: state.totalPrice - item.price,
+        }))
+      },
+    }),
+    { name: 'cart', skipHydration: true }
+  )
+)

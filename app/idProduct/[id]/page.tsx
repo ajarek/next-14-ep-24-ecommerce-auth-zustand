@@ -1,15 +1,16 @@
 import Image from 'next/image'
-import Link from 'next/link'
+
 import React from 'react'
-import AddCart from '@/components/AddCart'
+
 import { getProduct } from '@/lib/getProducts'
-import useCartStore from '@/store/useCartStore'
-import Counter from '@/components/Counter'
+import Price from '@/components/Price'
+
 const ProductsDetails = async ({ params }: { params: { id: string } }) => {
   const { id } = params
 
   const product = await getProduct(id)
-
+  
+  
   return (
     <div className='flex min-h-full flex-col  p-8 max-md:p-4'>
       <div className='grid grid-cols-2  max-sm:grid-cols-1 gap-4   place-items-center mt-16'>
@@ -29,17 +30,12 @@ const ProductsDetails = async ({ params }: { params: { id: string } }) => {
             <p>{product.status}</p>
           </div>
           <p className='text-xl'>{(+product.price).toFixed(2)} $</p>
-          <Counter product={product} />
+         
           <div className='flex flex-col'>
             <h2 className='font-bold'>Description</h2>
             <p>{product.description}</p>
           </div>
-          <AddCart
-            id={product._id.toString()}
-            price={product.price}
-            name={product.name}
-            image={product.image}
-            quantity={product.quantity}/>
+          <Price product={product}/>
         </div>
       </div>
     </div>

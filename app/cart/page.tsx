@@ -5,7 +5,7 @@ import {useCartStore} from '@/store/useCartStore'
 import Image from 'next/image'
 
 const Cart = () => {
-  const {  products,  removeFromCart, totalPrice} = useCartStore();
+  const {  products,  removeFromCart} = useCartStore();
   
 useEffect(() => {
     useCartStore.persist.rehydrate();
@@ -41,8 +41,7 @@ useEffect(() => {
                onClick={() =>  removeFromCart(item)}
               className='text-3xl text-red-700'
             >
-              {' '}
-              🗑{' '}
+               🗑
             </button>
           </div>
         ))}

@@ -1,4 +1,3 @@
-import { ActionTypes, CartType } from '/useCartStore'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -42,43 +41,41 @@ export const useCartStore = create(
       totalItems: INITIAL_STATE.totalItems,
       totalPrice: INITIAL_STATE.totalPrice,
 
-      addToCart(item: CartType) {
+      addToCart(item: CartItemType) {
         const products = get().products
-        const productInState = products.find(
-          (product: { id: string }) => product.id === item.id
-        )
+        const product = products.find((product: { id: string }) => product.id === item.id)
 
-        if (productInState) {
-          const updatedProducts = products.map((product: CartItemType) =>
-            product.id === productInState.id
-              ? {
-                  ...item,
-                  quantity: item.quantity + product.quantity,
-                  price: item.price + product.price,
-                }
-              : item
-          )
+        if (product) {
+          product.quantity += item.quantity
+
           set((state: CartType) => ({
-            products: updatedProducts,
+            products: products.map((p) => p.id === item.id ? { ...p, quantity: p.quantity + item.quantity } : p),
             totalItems: state.totalItems + item.quantity,
-            totalPrice: state.totalPrice + item.price,
+            totalPrice: state.totalPrice + (item.quantity * item.price),
           }))
         } else {
           set((state: CartType) => ({
             products: [...state.products, item],
             totalItems: state.totalItems + item.quantity,
-            totalPrice: state.totalPrice + item.price,
+            totalPrice: state.totalPrice + (item.quantity * item.price),
           }))
         }
       },
-      removeFromCart(item: CartType) {
-        set((state: CartType) => ({
-          products: state.products.filter(
-            (product: CartItemType) => product.id !== item.id
-          ),
-          totalItems: state.totalItems - item.quantity,
-          totalPrice: state.totalPrice - item.price,
-        }))
+      removeFromCart(item: CartItemType) {
+        const products = get().products
+        const index = products.findIndex((product: CartItemType) => product.id === item.id)
+
+        if (index !== -1) {
+          const updatedProducts = [...products]
+          updatedProducts.splice(index, 1)
+          const removedItemPrice = item.price * item.quantity
+
+          set((state: CartType) => ({
+            products: updatedProducts,
+            totalItems: state.totalItems - item.quantity,
+            totalPrice: state.totalPrice - removedItemPrice,
+          }))
+        }
       },
     }),
     { name: 'cart', skipHydration: true }

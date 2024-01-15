@@ -47,7 +47,7 @@ useEffect(() => {
           </div>
         ))}
       </div>
-      <p className='text-right text-xl font-bold'>Total Price {(+totalPrice).toFixed(2)} $</p>
+      <p className='text-right text-xl font-bold'>Total Price {([...products].reduce((a: number,b: { price: number; quantity: number })=>a+b.price*b.quantity,0)).toFixed(2)} $</p>
     </div>
   )
 }

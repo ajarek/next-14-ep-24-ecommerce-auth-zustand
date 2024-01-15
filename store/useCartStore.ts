@@ -67,7 +67,7 @@ export const useCartStore = create(
           set((state: CartType) => ({
             products: [...state.products, item],
             totalItems: state.totalItems + item.quantity,
-            totalPrice: state.totalPrice + Number(item.price),
+            totalPrice: state.totalPrice + item.price,
           }))
         }
       },

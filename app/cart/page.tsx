@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import {useCartStore} from '@/store/useCartStore'
 
 import Image from 'next/image'
+import Link from 'next/link'
+
 
 const Cart = () => {
   const {  products,  removeFromCart} = useCartStore();
@@ -47,6 +49,10 @@ useEffect(() => {
         ))}
       </div>
       <p className='text-right text-xl font-bold'>Total Price {([...products].reduce((a: number,b: { price: number; quantity: number })=>a+b.price*b.quantity,0)).toFixed(2)} $</p>
+      <div className=' flex justify-end py-4'>
+
+      <Link className='uppercase w-52 bg-blue-500  text-center p-3 ring-1 ring-blue-500 rounded-sm' href={'/payment'}>Pay</Link>
+      </div>
     </div>
   )
 }

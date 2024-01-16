@@ -22,7 +22,7 @@ const ProductsDetails = async ({ params }: { params: { id: string } }) => {
             height={300}
           />
         </div>
-        <div className='h-full min-h-[400px] flex flex-col justify-evenly  p-4'>
+        <div className='h-full min-h-[400px] max-sm:w-[350px]  flex flex-col justify-evenly max-sm:p-1 p-4'>
           <h1 className='text-2xl font-bold'>{product.name}</h1>
           <div className='flex'>
             <p>{product.category}</p>

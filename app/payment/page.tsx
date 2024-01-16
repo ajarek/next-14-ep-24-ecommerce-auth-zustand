@@ -11,7 +11,7 @@ const Payment = () => {
   const router = useRouter()
   let { products, removeFromCart } = useCartStore()
   const notifySuccess = () => {
-    toast.success(`Thank you for your payment!`, {
+    toast.success(`Thank  you for your payment ${allPayValue} $!`, {
       position: 'top-center',
       autoClose: 3000,
       hideProgressBar: false,
@@ -24,6 +24,7 @@ const Payment = () => {
   }
   const handleSubmit = (e:any) => {
     e.preventDefault()
+    
     notifySuccess();
     [...products].map((item:any)=>removeFromCart(item));
     setTimeout(() => {
@@ -34,7 +35,7 @@ const allPayValue=([...products]?.reduce((a: number,b: { price: number; quantity
   return (
     <div className='   flex flex-col justify-center items-center  py-4'>
       <ToastContainer />
-      <form className='w-[400px] max-sm:w-100% bg-blue-300 p-12 rounded-sm'>
+      <form onSubmit={handleSubmit} className='w-[400px] max-sm:w-full bg-blue-300 p-12 max-sm:p-2 rounded-sm'>
         <div className='flex'>
 
       <FaCcVisa
@@ -84,7 +85,7 @@ const allPayValue=([...products]?.reduce((a: number,b: { price: number; quantity
         <div className='w-100% py-4 flex justify-end'>
           <Button
             type='submit'
-            onClick={handleSubmit}
+          
           >
             I pay by card
           </Button>

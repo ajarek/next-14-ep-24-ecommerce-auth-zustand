@@ -16,14 +16,14 @@ const DropdownMenu = () => {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center justify-center bg-white text-black px-2'>
       <button onClick={toggleMenu}>Admin</button>
 
       {isMenuOpen && (
         <ul className='mt-2'>
           <Link
             href={'/login'}
-            className='border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 rounded-md '
+            className='border border-input bg-white text-black hover:text-accent-foreground h-10 px-4 py-2  '
             onClick={() => handleItemClick()}
           >
             Login

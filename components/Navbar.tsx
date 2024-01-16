@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <>
       <header className='  max-w-[1440px] mx-auto z-10 w-full'>
-        <nav className='h-24 flex justify-between items-center max-container  px-12 py-2 border-b-2'>
+        <nav className='h-24 flex justify-between items-center max-container  px-12 max-sm:px-2 py-2 border-b-2'>
           <div>
             <Link
               href='/'
@@ -138,7 +138,7 @@ const Navbar = () => {
       </header>
       {isMenuOpen && (
         <div className='flex justify-end border-2 '>
-          <ul className='absolute w-1/3 lg:hidden flex flex-col items-start justify-start  p-4 gap-6 border-2  bg-primary'>
+          <ul className='absolute w-1/3 lg:hidden flex flex-col items-start justify-start  p-4 gap-6 border-2  bg-primary z-10'>
             {navLinks.map((item) => (
               <li key={item.label}>
                 <Link

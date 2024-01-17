@@ -1,6 +1,5 @@
 <img width="300" alt="Zrzut ekranu 2024-01-17 204504" src="https://github.com/ajarek/next-14-ep-24-ecommerce-auth-zustand/assets/61388692/d534cbe1-4aa4-41e6-bcc2-3aa8bd93a270">
 <img width="300" alt="Zrzut ekranu 2024-01-17 204537" src="https://github.com/ajarek/next-14-ep-24-ecommerce-auth-zustand/assets/61388692/05a2aa89-524f-4735-bb34-dd239667a880">
-<img width="942" alt="Zrzut ekranu 2024-01-17 204618" src="https://github.com/ajarek/next-14-ep-24-ecommerce-auth-zustand/assets/61388692/640c2732-2687-4e79-9b6a-1ad7239d83ee">
 <img width="300" alt="Zrzut ekranu 2024-01-17 204640" src="https://github.com/ajarek/next-14-ep-24-ecommerce-auth-zustand/assets/61388692/4809ba5e-2f25-467e-85ac-d4b384c08875">
 <img width="150" alt="Zrzut ekranu 2024-01-17 204100" src="https://github.com/ajarek/next-14-ep-24-ecommerce-auth-zustand/assets/61388692/d672dfe1-a6d4-427e-a300-e3ebfa104ab5">
 <img width="150" alt="Zrzut ekranu 2024-01-17 204131" src="https://github.com/ajarek/next-14-ep-24-ecommerce-auth-zustand/assets/61388692/b4cbd9f4-cf18-4102-b9a2-bd2aae32d3cd">
